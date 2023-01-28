@@ -6,7 +6,7 @@ gateway="192.168.1.1"
 fail_counter=0
 
 wifi_up() {
-  if [ "$(wifi status)" = "*\"up\": true*" ]; then
+  if [ "$(expr "$(wifi status)" : ".*\"up\":\strue.*$")" -gt 0 ]; then
     logger -s -t disable_wifi_on_wan_down "wifi up"
     return 0
   else

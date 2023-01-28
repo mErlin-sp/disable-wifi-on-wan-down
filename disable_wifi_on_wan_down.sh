@@ -16,7 +16,7 @@ wifi_up() {
 }
 
 while true; do
-  if [ "$(ping -c 5 -q $gateway)" = "*0 packets received*" ]; then
+  if [ "$(expr "$(ping -c 5 -q $gateway)" : ".*[1-5]\spackets\sreceived.*$")" -eq 0 ]; then
     fail_counter=$((fail_counter + 1))
     logger -s -t disable_wifi_on_wan_down "ifdown / fail_counter: $fail_counter"
 
